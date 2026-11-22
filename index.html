@@ -42,6 +42,9 @@
   .plan { margin-top: 14px; background: #fff; border-radius: 18px; padding: 16px 18px; font-size: 16px; line-height: 2; }
   .plan h3 { font-size: 18px; margin-bottom: 6px; }
   .plan ul { padding-right: 20px; }
+  .buds { display: flex; gap: 8px; margin: 8px 0 6px; }
+  .bud { flex: 1; border: 2px solid var(--plum); background: #fff; color: var(--plum); border-radius: 14px; padding: 10px 4px; font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .bud.on { background: var(--plum); color: #fff; }
   .src { margin-top: 18px; font-size: 12px; opacity: .6; text-align: center; line-height: 1.8; }
 </style>
 </head>
@@ -113,7 +116,16 @@
     setTimeout(() => { if (document.visibilityState === "visible") location.href = "instagram://user?username=zanesalem_com"; }, 300);
     setTimeout(() => { if (document.visibilityState === "visible") document.getElementById("closehint").style.display = "block"; }, 1500);
   }
-const PLAN = '<div class="plan"><h3>🍽️ یه روز نمونه با غذاهای پرآهن</h3><ul><li><b>صبحانه:</b> نون سبوس‌دار، تخم‌مرغ، چند تا گردو و یه لیوان آب‌پرتقال (به‌جای چای)</li><li><b>میان‌وعده:</b> یه مشت کشمش یا انجیر خشک با چند تا بادام</li><li><b>ناهار:</b> عدس‌پلو یا قورمه‌سبزی با گوشت قرمز کم‌چرب، و سالاد با آبلیمو</li><li><b>عصرونه:</b> یه پرتقال یا نارنگی</li><li><b>شام:</b> عدسی یا خوراک مرغ با سبزی خوردن</li></ul><h3 style="margin-top:10px">💡 چند نکته</h3><ul><li>چای و قهوه رو یه ساعت قبل یا بعد از غذا بخور.</li><li>لبنیات رو جدا از وعده‌های پرآهن بخور.</li><li>کنار غذا یه چیز ترش مثل لیمو یا نارنج داشته باش؛ جذب آهن رو بیشتر میکنه.</li></ul></div>';
+const MEALS = [
+    ["صبحانه", "نون سبوس‌دار، تخم‌مرغ آب‌پز، چند تا خرما و یه پرتقال", "املت اسفناج با نون سبوس‌دار، چند تا گردو و آب‌پرتقال طبیعی"],
+    ["میان‌وعده", "یه مشت کشمش با نخودچی", "انجیر خشک با بادام و پسته"],
+    ["ناهار", "عدس‌پلو با کشمش و سالاد شیرازی با آبلیمو", "قورمه‌سبزی با گوشت قرمز و سالاد با آبلیمو"],
+    ["عصرونه", "یه پرتقال یا نارنگی", "کیوی یا توت‌فرنگی با چند تا گردو"],
+    ["شام", "عدسی یا خوراک لوبیا با نون و سبزی خوردن", "خوراک گوشت یا مرغ با سبزیجات و سالاد با آبلیمو"]
+  ];
+  const planList = (k) => "<ul>" + MEALS.map(m => "<li><b>" + m[0] + ":</b> " + m[k] + "</li>").join("") + "</ul>";
+  function budget(k) { document.getElementById("planlist").innerHTML = planList(k); document.querySelectorAll(".bud").forEach((b, n) => b.classList.toggle("on", n === k - 1)); }
+  const PLAN = '<div class="plan"><h3>🍽️ یه روز نمونه با غذاهای پرآهن</h3><p style="font-size:15px;opacity:.8">بودجه‌ت رو انتخاب کن:</p><div class="buds"><button class="bud on" onclick="budget(1)">💚 اقتصادی</button><button class="bud" onclick="budget(2)">💎 بودجه‌ی بیشتر</button></div><div id="planlist">' + planList(1) + '</div><h3 style="margin-top:10px">💡 چند نکته</h3><ul><li>چای و قهوه رو یه ساعت قبل یا بعد از غذا بخور.</li><li>لبنیات رو جدا از وعده‌های پرآهن بخور.</li><li>کنار غذا یه چیز ترش مثل لیمو یا نارنج داشته باش؛ جذب آهن رو بیشتر میکنه.</li></ul></div>';
   function result() {
     const s = Q.reduce((t, q, k) => t + (ans[k] ? q[1] : 0), 0);
     $("sc").textContent = FA(s);
