@@ -73,7 +73,8 @@
     <div class="meter"><b id="pin"></b></div>
     <div class="advice" id="adv"></div>
     <div class="cta">سؤالی داری؟ همین الان به پیج <b>زن سالم</b> دایرکت بده؛ تیم ما جوابت رو میده. 🌸</div>
-    <a class="btn primary" style="text-decoration:none;text-align:center" href="https://www.instagram.com/zanesalem_com/">رفتن به پیج زن سالم</a>
+    <button class="btn primary" onclick="backToIG()">برگشت به دایرکت زن سالم</button>
+    <p class="note" id="closehint" style="display:none">اگه برنگشتی، دکمه‌ی ✕ یا «بستن» بالای صفحه رو بزن.</p>
     <button class="btn ghost" onclick="restart()">دوباره جواب میدم</button>
   </div>
 
@@ -83,7 +84,7 @@
 <script>
   const FA = (n) => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]).replace(".", "٫");
   const Q = [
-    ["خستگیت حتی با خواب کافی هم خوب نمیشه؟", 2],
+    ["حتی وقتی خوب میخوابی، بیشتر روزها باز هم خسته‌ای؟", 2],
     ["وقتی سریع بلند میشی، سرت گیج میره یا چشمت سیاهی میره؟", 1.5],
     ["پریودت سنگینه یا بیشتر از ۷ روز طول میکشه؟", 2],
     ["موهات زیاد میریزه یا ناخن‌هات زود میشکنن؟", 1.5],
@@ -103,6 +104,12 @@
   function answer(y) { ans[i] = y; i++; if (i < Q.length) render(); else result(); }
   function back() { if (i > 0) { i--; render(); } }
   function restart() { show("start"); }
+  function backToIG() {
+    // inside Instagram's in-app browser: just close the page and return to the DM (instant)
+    try { window.close(); } catch (e) {}
+    setTimeout(() => { if (document.visibilityState === "visible") location.href = "instagram://user?username=zanesalem_com"; }, 300);
+    setTimeout(() => { if (document.visibilityState === "visible") document.getElementById("closehint").style.display = "block"; }, 1500);
+  }
   function result() {
     const s = Q.reduce((t, q, k) => t + (ans[k] ? q[1] : 0), 0);
     $("sc").textContent = FA(s);
