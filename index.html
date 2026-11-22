@@ -125,7 +125,7 @@ const MEALS = [
   ];
   const planList = (k) => "<ul>" + MEALS.map(m => "<li><b>" + m[0] + ":</b> " + m[k] + "</li>").join("") + "</ul>";
   function budget(k) { document.getElementById("planlist").innerHTML = planList(k); document.querySelectorAll(".bud").forEach((b, n) => b.classList.toggle("on", n === k - 1)); }
-  const PLAN = '<div class="plan"><h3>🍽️ یه روز نمونه با غذاهای پرآهن</h3><p style="font-size:15px;opacity:.8">بودجه‌ت رو انتخاب کن:</p><div class="buds"><button class="bud on" onclick="budget(1)">💚 اقتصادی</button><button class="bud" onclick="budget(2)">💎 بودجه‌ی بیشتر</button></div><div id="planlist">' + planList(1) + '</div><h3 style="margin-top:10px">💡 چند نکته</h3><ul><li>چای و قهوه رو یه ساعت قبل یا بعد از غذا بخور.</li><li>لبنیات رو جدا از وعده‌های پرآهن بخور.</li><li>کنار غذا یه چیز ترش مثل لیمو یا نارنج داشته باش؛ جذب آهن رو بیشتر میکنه.</li></ul></div>';
+  const PLAN = '<div class="plan"><h3>🍽️ یه روز با غذاهای پرآهن</h3><p style="font-size:15px;line-height:1.9">برات دو تا برنامه نوشتیم: یکی <b>اقتصادی</b> و یکی با <b>بودجه‌ی بیشتر</b>. با دکمه‌های زیر میتونی هر دو رو ببینی.</p><div class="buds"><button class="bud on" onclick="budget(1)">💚 اقتصادی</button><button class="bud" onclick="budget(2)">💎 بودجه‌ی بیشتر</button></div><div id="planlist">' + planList(1) + '</div><h3 style="margin-top:10px">💡 چند نکته</h3><ul><li>چای و قهوه رو یه ساعت قبل یا بعد از غذا بخور.</li><li>لبنیات رو جدا از وعده‌های پرآهن بخور.</li><li>کنار غذا یه چیز ترش مثل لیمو یا نارنج داشته باش؛ جذب آهن رو بیشتر میکنه.</li></ul></div>';
   function result() {
     const s = Q.reduce((t, q, k) => t + (ans[k] ? q[1] : 0), 0);
     $("sc").textContent = FA(s);
