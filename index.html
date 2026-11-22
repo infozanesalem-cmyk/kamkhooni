@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آزمون نشونه‌های کم‌خونی | زن سالم</title>
+<meta name="description" content="۶ سؤال کوتاه؛ امتیاز نشونه‌های کم‌خونی‌ت رو همین الان ببین.">
+<style>
+  @font-face { font-family: "Vazirmatn"; src: url("Vazirmatn-Regular.ttf"); font-weight: 400; font-display: swap; }
+  @font-face { font-family: "Vazirmatn"; src: url("Vazirmatn-Bold.ttf"); font-weight: 700; font-display: swap; }
+  :root { --ink: #3B1540; --plum: #5B2A5E; --pink: #F4C6D0; --rose: #D9536F; --beige: #F3E3D3; --cream: #FFF8F2; --green: #4E8A3E; --gold: #E0A93A; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--beige); color: var(--ink); font-family: "Vazirmatn", Tahoma, sans-serif; }
+  body { min-height: 100vh; display: flex; justify-content: center; padding: 20px 14px 40px; }
+  .wrap { width: 100%; max-width: 460px; }
+  .brand { text-align: center; font-size: 15px; opacity: .7; margin-bottom: 10px; direction: ltr; }
+  .card { background: var(--cream); border-radius: 26px; padding: 26px 22px; box-shadow: 0 10px 30px rgba(59, 21, 64, .10); }
+  h1 { font-size: 28px; line-height: 1.4; text-align: center; }
+  .lead { margin-top: 12px; font-size: 17px; line-height: 1.9; text-align: center; }
+  .pill { display: inline-block; background: var(--pink); border-radius: 999px; padding: 4px 16px; font-weight: 700; font-size: 15px; }
+  .center { text-align: center; margin-top: 16px; }
+  .btn { display: block; width: 100%; border: 0; border-radius: 18px; padding: 16px; font-family: inherit; font-size: 19px; font-weight: 700; cursor: pointer; margin-top: 14px; transition: transform .08s; }
+  .btn:active { transform: scale(.98); }
+  .primary { background: var(--plum); color: #fff; }
+  .yes { background: var(--plum); color: #fff; }
+  .no { background: #fff; color: var(--plum); border: 2px solid var(--plum); }
+  .ghost { background: transparent; color: var(--plum); font-size: 16px; font-weight: 400; text-decoration: underline; }
+  .bar { height: 10px; background: #EBD9CB; border-radius: 999px; overflow: hidden; margin: 6px 0 18px; }
+  .bar i { display: block; height: 100%; background: var(--rose); width: 0; transition: width .3s; }
+  .step { font-size: 15px; opacity: .75; }
+  .q { font-size: 22px; font-weight: 700; line-height: 1.7; min-height: 112px; display: flex; align-items: center; }
+  .score { font-size: 64px; font-weight: 700; text-align: center; line-height: 1.1; margin-top: 8px; }
+  .score small { font-size: 24px; opacity: .7; }
+  .level { text-align: center; font-size: 22px; font-weight: 700; margin-top: 6px; }
+  .meter { height: 14px; border-radius: 999px; margin: 16px 0 6px; background: linear-gradient(90deg, #6FA35A, var(--gold), var(--rose)); position: relative; }
+  .meter b { position: absolute; top: -6px; width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 4px solid var(--ink); }
+  .advice { margin-top: 16px; background: #fff; border-radius: 18px; padding: 16px 18px; font-size: 17px; line-height: 2; }
+  .advice ul { padding-right: 20px; }
+  .note { margin-top: 14px; font-size: 14px; line-height: 1.9; opacity: .75; text-align: center; }
+  .cta { margin-top: 18px; text-align: center; font-size: 17px; line-height: 1.9; }
+  .hide { display: none; }
+  .src { margin-top: 18px; font-size: 12px; opacity: .6; text-align: center; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">@zanesalem_com</div>
+
+  <!-- start -->
+  <div class="card" id="start">
+    <div class="center" style="margin-top:0"><span class="pill">زن سالم</span></div>
+    <h1 style="margin-top:14px">آزمون نشونه‌های کم‌خونی</h1>
+    <p class="lead">طبق آمار سازمان جهانی بهداشت، از هر ۳ زن تقریباً ۱ نفر کم‌خونی داره.<br>۶ سؤال کوتاه جواب بده و امتیاز نشونه‌هات رو همین الان ببین.</p>
+    <button class="btn primary" onclick="go()">شروع آزمون</button>
+    <p class="note">کمتر از ۱ دقیقه طول میکشه و جواب‌هات جایی ذخیره نمیشه.</p>
+  </div>
+
+  <!-- question -->
+  <div class="card hide" id="quiz">
+    <div class="step" id="step"></div>
+    <div class="bar"><i id="bar"></i></div>
+    <div class="q" id="q"></div>
+    <button class="btn yes" onclick="answer(true)">آره</button>
+    <button class="btn no" onclick="answer(false)">نه</button>
+    <button class="btn ghost" id="back" onclick="back()">سؤال قبلی</button>
+  </div>
+
+  <!-- result -->
+  <div class="card hide" id="result">
+    <div class="center" style="margin-top:0"><span class="pill">امتیاز نشونه‌هات</span></div>
+    <div class="score"><span id="sc"></span><small> از ۱۰</small></div>
+    <div class="level" id="lvl"></div>
+    <div class="meter"><b id="pin"></b></div>
+    <div class="advice" id="adv"></div>
+    <div class="cta">سؤالی داری؟ همین الان به پیج <b>زن سالم</b> دایرکت بده؛ تیم ما جوابت رو میده. 🌸</div>
+    <a class="btn primary" style="text-decoration:none;text-align:center" href="https://www.instagram.com/zanesalem_com/">رفتن به پیج زن سالم</a>
+    <button class="btn ghost" onclick="restart()">دوباره جواب میدم</button>
+  </div>
+
+  <p class="src">منابع: سازمان جهانی بهداشت (کم‌خونی، ۲۰۲۳)؛ سرویس سلامت بریتانیا (کم‌خونی فقر آهن)</p>
+</div>
+
+<script>
+  const FA = (n) => String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]).replace(".", "٫");
+  const Q = [
+    ["خستگیت حتی با خواب کافی هم خوب نمیشه؟", 2],
+    ["وقتی سریع بلند میشی، سرت گیج میره یا چشمت سیاهی میره؟", 1.5],
+    ["پریودت سنگینه یا بیشتر از ۷ روز طول میکشه؟", 2],
+    ["موهات زیاد میریزه یا ناخن‌هات زود میشکنن؟", 1.5],
+    ["با یه فعالیت کم، مثل بالا رفتن از پله، نفس‌نفس میزنی یا قلبت تند میزنه؟", 1.5],
+    ["دست و پات زیاد سرده، یا هوس یخ جویدن داری؟", 1.5]
+  ];
+  let i = 0, ans = [];
+  const $ = (id) => document.getElementById(id);
+  function show(id) { ["start", "quiz", "result"].forEach(x => $(x).classList.toggle("hide", x !== id)); window.scrollTo(0, 0); }
+  function render() {
+    $("step").textContent = "سؤال " + FA(i + 1) + " از " + FA(Q.length);
+    $("bar").style.width = (i / Q.length * 100) + "%";
+    $("q").textContent = Q[i][0];
+    $("back").style.visibility = i ? "visible" : "hidden";
+  }
+  function go() { i = 0; ans = []; show("quiz"); render(); }
+  function answer(y) { ans[i] = y; i++; if (i < Q.length) render(); else result(); }
+  function back() { if (i > 0) { i--; render(); } }
+  function restart() { show("start"); }
+  function result() {
+    const s = Q.reduce((t, q, k) => t + (ans[k] ? q[1] : 0), 0);
+    $("sc").textContent = FA(s);
+    $("pin").style.left = "calc(" + (s / 10 * 100) + "% - 13px)";
+    let lvl, adv;
+    if (s <= 3) {
+      lvl = "نشونه‌هات کمه 💚";
+      adv = "خبر خوب! نشونه‌های کمی داری. برای اینکه همین‌طور بمونه:<ul><li>توی غذات عدس، لوبیا، گوشت قرمز کم‌چرب و سبزی‌های برگ‌سبز باشه.</li><li>کنارش یه منبع ویتامین ث مثل لیمو یا پرتقال بخور؛ جذب آهن رو بیشتر میکنه.</li></ul>";
+    } else if (s <= 6) {
+      lvl = "نشونه‌هات متوسطه 💛";
+      adv = "چند تا از نشونه‌های کم‌خونی رو داری.<ul><li>یه آزمایش خون ساده (شمارش خون و آهن) خیالت رو راحت میکنه.</li><li>تا اون موقع، چای رو با یه ساعت فاصله از غذا بخور؛ چای جذب آهن رو کم میکنه.</li><li>عدس، لوبیا، گوشت قرمز کم‌چرب و سبزی برگ‌سبز رو کنار لیمو یا پرتقال بخور.</li></ul>";
+    } else {
+      lvl = "نشونه‌هات زیاده ❤️";
+      adv = "نشونه‌های زیادی داری.<ul><li>حتماً یه آزمایش خون ساده (شمارش خون و آهن) بده و نتیجه‌ش رو با پزشکت چک کن.</li><li>خودسرانه قرص آهن نخور؛ مقدار مناسبش رو پزشک میگه.</li><li>اگه پریودت سنگینه، حتماً به پزشکت بگو؛ یکی از دلیل‌های رایج کم‌خونیه.</li></ul>";
+    }
+    $("lvl").textContent = lvl; $("adv").innerHTML = adv;
+    show("result");
+  }
+</script>
+</body>
+</html>
